@@ -15,36 +15,29 @@
 
 /**
  * @author muyousome
- * @since 2016-3-1 07:55:34
- *  字符流输入输出
+ * @since 2016-3-2 21:40:22
+ *  带缓冲区的字节流输入输出
  */
-
 import java.io.*;
 
-
-class TestFileReaderWriter{
+class TestBufferedStream{
 	public static void main(String[] args) {
-		FileReader in = null;
-		FileWriter out = null;
-		String path = "." + File.separator;
-		int b = 0;
+		int out= 0;
 		try{
-			in = new FileReader(path + "TestFileReaderWriter.java");
-			out = new FileWriter(path + "OutputFile.java");
-
-			//从文件中读取字符流写入新文件中
-			while((b = in.read()) != -1){
-				out.write(b);
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("test.dat"));
+			BufferedInputStream bis = new BufferedInputStream(new FileInputStream("test.dat"));
+			//写入数据，写入完成后要关闭(flush)，否则会读不出数据
+			for (int i = 0; i<100; i++) {
+				bos.write(i);
 			}
-			in.close();
-			out.close();
-			//out.flush();
+			bos.close();
 
-		}catch(FileNotFoundException e1){
-			System.out.println("File not found!");
-			System.exit(-1);
-		}catch(IOException e2){
-			System.out.println("Read file error!");
+			while ((out = bis.read()) != -1) {
+				System.out.print((char)out);
+			}			
+			bis.close();
+		}catch(IOException e){
+			System.out.println("File error!");
 			System.exit(-1);
 		}
 	}
