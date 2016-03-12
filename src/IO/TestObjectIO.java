@@ -38,7 +38,7 @@ public class TestObjectIO{
 			ObjectInputStream ois = new ObjectInputStream(fis);
 
 			TestSer ts = (TestSer)ois.readObject();
-			System.out.println("i:" + ts.i + " j:" + ts.j + " k:" + ts.k + " s:" + ts.s);
+			System.out.println("i=" + ts.i + " j=" + ts.j + " k=" + ts.k + " s=" + ts.s + " t=" + ts.t);
 
 			fis.close();
 			ois.close();
@@ -57,4 +57,5 @@ class TestSer implements Serializable{
 	float j = 1.2f;
 	double k = 71.2;
 	String s = "TestSer";
+	transient int t = 110;
 }
